@@ -1,18 +1,23 @@
-function countZeroes(arr) {
-  let idx = Math.floor(arr.length / 2);
+function countZeroes(arr){
+  let [lIdx, rIdx, idx] = [0, arr.length - 1, null];
 
-  while (arr[idx] === arr[idx+1] && idx !== arr.length-1 && idx !== 0){
-    idx = ( arr[idx]===0 ? Math.floor(idx/2) : Math.floor(idx/2 + idx));
+  while (lIdx < rIdx){
+    idx = Math.floor((lIdx + rIdx)/2);
+    if (arr[idx] === 1) {
+      if (arr[idx+1]===0) { return arr.length - (idx + 1) }
+      lIdx = idx + 1;
+    } else if (arr[idx - 1] === 0){
+      if (idx-1===0) {return arr.length}
+      rIdx = idx - 1;
+    } else {
+      return arr.length - idx
+    }
   }
-  
-  switch(idx) {
-    case 0:
-      return arr[idx] === 0 ? arr.length : arr.length - 1;
-    case arr.length -1:
-      return 0
-    default:
-      return arr.length - (idx + 1);
-  }
+  return 0;
 }
 
-module.exports = countZeroes
+module.exports = countZeroes;
+// console.log(countZeros([1, 1, 1, 1, 0, 0]));
+// console.log(countZeros([1, 0, 0, 0, 0]));
+// console.log(countZeros([0,0,0]));
+// console.log(countZeros([1,1,1,1]));
