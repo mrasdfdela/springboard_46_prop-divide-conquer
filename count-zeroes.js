@@ -1,7 +1,7 @@
 function countZeroes(arr){
   let [lIdx, rIdx, idx] = [0, arr.length - 1, null];
 
-  while (lIdx < rIdx){
+  while (lIdx <= rIdx){
     idx = Math.floor((lIdx + rIdx)/2);
     if (arr[idx] === 1) {
       if (arr[idx+1]===0) { return arr.length - (idx + 1) }
@@ -16,8 +16,8 @@ function countZeroes(arr){
   return 0;
 }
 
-module.exports = countZeroes;
-// console.log(countZeros([1, 1, 1, 1, 0, 0]));
-// console.log(countZeros([1, 0, 0, 0, 0]));
-// console.log(countZeros([0,0,0]));
-// console.log(countZeros([1,1,1,1]));
+console.log(countZeroes([1, 1, 1, 1, 0, 0]));
+console.log(countZeroes([1, 0, 0, 0, 0]));
+console.log(countZeroes([0,0,0]));
+console.log(countZeroes([1,1,1,1]));
+// module.exports = countZeroes;

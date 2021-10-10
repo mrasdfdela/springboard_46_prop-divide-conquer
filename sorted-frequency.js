@@ -1,63 +1,38 @@
 function sortedFrequency(arr, num) {
-  function _findStartIdx(arr, num) {
-    let [minIdx, maxIdx, idx] = [0, arr.length - 1, Math.floor(arr.length / 2)];
-
-    while ( 
-      idx !== 0 && 
-      // !(arr[idx+1]===num) && 
-      !(arr[idx + 1] == num && arr[idx]!==num) ){
-      if (arr[idx] >= num) {
-        maxIdx = idx;
-        idx = Math.floor(maxIdx/2);
+  function _getLowIdx(){
+    let [lowLIdx, lowRIdx, lowIdx] = [0, arr.length - 1, null];
+    while (lowLIdx <= lowRIdx) {
+      lowIdx = Math.floor((lowLIdx + lowRIdx) / 2);
+      if (arr[lowIdx] < num) {
+        lowLIdx = lowIdx + 1;
+      } else if (arr[lowIdx] >= num && arr[lowIdx] === arr[lowIdx - 1]) {
+        lowRIdx = lowIdx - 1;
       } else {
-        minIdx = idx;
-        idx = idx + Math.ceil((maxIdx-idx)/2);
+        return lowIdx;
       }
     }
-    switch (idx) {
-      case 0:
-        return arr[idx] === num ? -1 : 0;
-      case arr.length - 1:
-        return arr[idx] === num ? idx - 1 : idx;
-      default:
-        return idx;
-    }
+    return -1
   }
 
-  function _findEndIdx(arr, num) {
-    let [minIdx, maxIdx, idx] = [0, arr.length - 1, Math.floor(arr.length / 2)];
-    while (
-      idx !== arr.length - 1 &&
-      !(arr[idx] === num && arr[idx+1]!==num)){
-      // console.log('another loop')
-      if (arr[idx] <= num) {
-        minIdx = idx;
-        idx = idx + Math.ceil((maxIdx - idx) / 2);
+  function _getHiIdx(){
+    let [hiLIdx, hiRIdx, hiIdx] = [0, arr.length - 1, null];
+    while (hiLIdx <= hiRIdx) {
+      hiIdx = Math.floor((hiLIdx + hiRIdx) / 2);
+      currNum = arr[hiIdx];
+      prevNum = arr[hiIdx-1];
+      if (currNum <= num && !(prevNum < currNum && currNum === num)) {
+        hiLIdx = hiIdx + 1;
+      } else if (currNum > num && !(prevNum < currNum)) {
+        hiRIdx = hiIdx - 1;
       } else {
-        maxIdx = idx;
-        idx = Math.ceil(maxIdx / 2);
+        return currNum == num ? hiIdx + 1 : hiIdx;
       }
-      // console.log(`next idx: ${idx}`);
-      // console.log(idx !== arr.length - 1);
-      // console.log(!(arr[idx] === num && arr[idx + 1] !== num));
     }
-    switch (idx) {
-      case arr[idx] < num:
-        return -1
-      default:
-        return idx
-    }
+    return -1
   }
-  console.log(_findEndIdx(arr, num) - _findStartIdx(arr, num));
-  return _findEndIdx(arr, num) - _findStartIdx(arr, num);
+
+  const numCount = ( _getHiIdx() === -1 ? -1 : _getHiIdx() - _getLowIdx() );
+  return numCount;
 }
 
-arr = [1,1,2,2,2,2,3];
-
-sortedFrequency(arr,1);
-sortedFrequency(arr,2);
-sortedFrequency(arr,3);
-// sortedFrequency(arr,4);
-
-
-// module.exports = sortedFrequency
+module.exports = sortedFrequency
