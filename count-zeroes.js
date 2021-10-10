@@ -16,8 +16,13 @@ function countZeroes(arr){
   return 0;
 }
 
-console.log(countZeroes([1, 1, 1, 1, 0, 0]));
-console.log(countZeroes([1, 0, 0, 0, 0]));
-console.log(countZeroes([0,0,0]));
-console.log(countZeroes([1,1,1,1]));
-// module.exports = countZeroes;
+module.exports = countZeroes;
+
+// window.onload = function(){
+//   document.getElementById("btn-run").onclick = function(){
+//     console.log(countZeroes([1, 1, 1, 1, 0, 0])); // 2
+//     console.log(countZeroes([1, 0, 0, 0, 0])); // 4
+//     console.log(countZeroes([0, 0, 0])); // 3
+//     console.log(countZeroes([1, 1, 1, 1])); // 0
+//   }
+// }
